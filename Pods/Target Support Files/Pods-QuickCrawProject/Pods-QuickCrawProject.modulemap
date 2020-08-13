@@ -1,0 +1,6 @@
+framework module Pods_QuickCrawProject {
+  umbrella header "Pods-QuickCrawProject-umbrella.h"
+
+  export *
+  module * { export * }
+}
