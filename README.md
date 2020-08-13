@@ -3,6 +3,7 @@
 
 ## 功能
 - 從 [監理所查詢場次網站](https://www.mvdis.gov.tw/m3-emv-trn/exm/locations#anchor) 爬回剩餘人數的資料
+- 找到有剩餘的場次後，使用 notification 推播的方式顯示 (必須是在背景執行的時候才可以)
 - 使用 Kanna 分析網頁 xpath
 
 ## 系統需求
