@@ -719,7 +719,7 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="66W-kd-NVK">
-                                <rect key="frame" x="465" y="14" width="70" height="32"/>
+                                <rect key="frame" x="424" y="13" width="70" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rXW-nm-Gz4">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -730,43 +730,45 @@
                                 </connections>
                             </button>
                             <datePicker verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GM9-hv-CLv" userLabel="Date From">
-                                <rect key="frame" x="205" y="19" width="103" height="32"/>
+                                <rect key="frame" x="127" y="19" width="103" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <datePickerCell key="cell" borderStyle="bezel" alignment="left" datePickerMode="range" id="qLR-FA-R0R">
+                                    <dateFormatter key="formatter" dateStyle="short" id="Rpj-OB-XbT"/>
                                     <font key="font" metaFont="system"/>
-                                    <date key="date" timeIntervalSinceReferenceDate="619315200">
-                                        <!--2020-08-17 00:00:00 +0000-->
+                                    <date key="date" timeIntervalSinceReferenceDate="617932800">
+                                        <!--2020-08-01 00:00:00 +0000-->
                                     </date>
-                                    <date key="minDate" timeIntervalSinceReferenceDate="619315200">
-                                        <!--2020-08-17 00:00:00 +0000-->
+                                    <date key="minDate" timeIntervalSinceReferenceDate="617932800">
+                                        <!--2020-08-01 00:00:00 +0000-->
                                     </date>
-                                    <date key="maxDate" timeIntervalSinceReferenceDate="619574400">
-                                        <!--2020-08-20 00:00:00 +0000-->
+                                    <date key="maxDate" timeIntervalSinceReferenceDate="623116800">
+                                        <!--2020-09-30 00:00:00 +0000-->
                                     </date>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 </datePickerCell>
                             </datePicker>
                             <datePicker verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pmc-HS-WAA">
-                                <rect key="frame" x="334" y="19" width="97" height="24"/>
+                                <rect key="frame" x="256" y="19" width="97" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="9vp-dA-H9A">
+                                    <dateFormatter key="formatter" dateStyle="short" id="1ok-BK-DDa"/>
                                     <font key="font" metaFont="system"/>
-                                    <date key="date" timeIntervalSinceReferenceDate="619574400">
-                                        <!--2020-08-20 00:00:00 +0000-->
+                                    <date key="date" timeIntervalSinceReferenceDate="617932800">
+                                        <!--2020-08-01 00:00:00 +0000-->
                                     </date>
-                                    <date key="minDate" timeIntervalSinceReferenceDate="619574400">
-                                        <!--2020-08-20 00:00:00 +0000-->
+                                    <date key="minDate" timeIntervalSinceReferenceDate="617932800">
+                                        <!--2020-08-01 00:00:00 +0000-->
                                     </date>
-                                    <date key="maxDate" timeIntervalSinceReferenceDate="619574400">
-                                        <!--2020-08-20 00:00:00 +0000-->
+                                    <date key="maxDate" timeIntervalSinceReferenceDate="623116800">
+                                        <!--2020-09-30 00:00:00 +0000-->
                                     </date>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 </datePickerCell>
                             </datePicker>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E5h-JG-MYO">
-                                <rect key="frame" x="310" y="23" width="18" height="16"/>
+                                <rect key="frame" x="232" y="23" width="18" height="16"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="到" id="nzq-Jj-fmH">
                                     <font key="font" metaFont="system"/>
@@ -775,9 +777,29 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wtz-GB-VMp">
-                                <rect key="frame" x="141" y="23" width="58" height="16"/>
+                                <rect key="frame" x="63" y="23" width="58" height="16"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="查詢範圍" id="map-fJ-Q4K">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KCR-X6-9KU">
+                                <rect key="frame" x="508" y="13" width="69" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Stop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pse-iZ-aH8">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="stopButton:" target="XfG-lQ-9wD" id="5m7-kc-IAW"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h3v-ah-qzS">
+                                <rect key="frame" x="610" y="23" width="372" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="場次資訊" id="cvF-iq-34i">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -789,6 +811,7 @@
                         <outlet property="crawWebView" destination="9PL-8t-kc0" id="JVf-0E-2VO"/>
                         <outlet property="dateFrom" destination="GM9-hv-CLv" id="1YA-fn-Aii"/>
                         <outlet property="dateTo" destination="pmc-HS-WAA" id="7LL-cg-FQt"/>
+                        <outlet property="resultDisplayLabel" destination="h3v-ah-qzS" id="rH3-sd-dGA"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

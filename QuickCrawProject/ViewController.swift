@@ -16,9 +16,11 @@ class ViewController: NSViewController, WKNavigationDelegate {
     @IBOutlet weak var crawWebView: WKWebView!
     @IBOutlet weak var dateFrom: NSDatePicker!
     @IBOutlet weak var dateTo: NSDatePicker!
+    @IBOutlet weak var resultDisplayLabel: NSTextField!
     
     var dateFromFormatted = ""
     var dateToFormatted = ""
+    var stopCrawing = false // 是否要爬蟲
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +32,7 @@ class ViewController: NSViewController, WKNavigationDelegate {
 
     @IBAction func startButton(_ sender: Any) // Start 按鈕
     {
+        stopCrawing = false
         let javascriptString = "document.querySelector('.cont90 .gap_t2 .std_btn').click();" // 按 "查詢場次" 按鈕
         crawWebView.evaluateJavaScript(javascriptString){ (value, error) in
             if let err = error {
@@ -58,28 +61,35 @@ class ViewController: NSViewController, WKNavigationDelegate {
         dateFromFormatted = dateFormatter.string(from: dateFrom.dateValue)
         dateToFormatted = dateFormatter.string(from: dateTo.dateValue)
     }
+    @IBAction func stopButton(_ sender: Any) // stop 按鈕
+    {
+        stopCrawing = true
+    }
     
     func continousCraw() // 按下按鈕後繼續爬蟲動作
     {
-        searchDateRange.removeAll()
-        resultTime.removeAll()
-        resultDate.removeAll()
-        let javascriptString = "document.querySelector('.cont90 .gap_t2 .std_btn').click();" // 按 "查詢場次" 按鈕
-        crawWebView.evaluateJavaScript(javascriptString){ (value, error) in
-            if let err = error {
-                print(err)
-            }
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now()+5) // 等待五秒
+        if !stopCrawing // 還要繼續爬蟲
         {
-            let javascriptString2 = "document.documentElement.outerHTML"
-            self.crawWebView.evaluateJavaScript(javascriptString2){ (value, error) in
+            searchDateRange.removeAll()
+            resultTime.removeAll()
+            resultDate.removeAll()
+            let javascriptString = "document.querySelector('.cont90 .gap_t2 .std_btn').click();" // 按 "查詢場次" 按鈕
+            crawWebView.evaluateJavaScript(javascriptString){ (value, error) in
                 if let err = error {
                     print(err)
                 }
-                else
-                {
-                    self.parsehtml(value as! String) // 抓出網頁內容，丟入 kanna 分析
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now()+5) // 等待五秒
+            {
+                let javascriptString2 = "document.documentElement.outerHTML"
+                self.crawWebView.evaluateJavaScript(javascriptString2){ (value, error) in
+                    if let err = error {
+                        print(err)
+                    }
+                    else
+                    {
+                        self.parsehtml(value as! String) // 抓出網頁內容，丟入 kanna 分析
+                    }
                 }
             }
         }
@@ -118,10 +128,12 @@ class ViewController: NSViewController, WKNavigationDelegate {
                         for date in doc!.xpath("//*[@id='trnTable']/tbody/tr[\(i)]/td[1]") // 日期
                         {
                             resultDate.append(date.text!.trimmingCharacters(in: .whitespacesAndNewlines))
+                            resultDisplayLabel.stringValue = date.text!.trimmingCharacters(in: .whitespacesAndNewlines)
                         }
                         for date in doc!.xpath("//*[@id='trnTable']/tbody/tr[\(i)]/td[2]") // 時間
                         {
                             let time = date.text!.trimmingCharacters(in: .whitespacesAndNewlines)[26...] // 把前面不需要的訊息去除
+                            resultDisplayLabel.stringValue += time
                             resultTime.append(time)
                         }
                         success = true // 有找到場次
