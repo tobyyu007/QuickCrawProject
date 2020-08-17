@@ -10,6 +10,7 @@ import Cocoa
 import WebKit
 import Alamofire
 import Kanna
+import SwiftSMTP
 
 class ViewController: NSViewController, WKNavigationDelegate {
 
@@ -24,10 +25,15 @@ class ViewController: NSViewController, WKNavigationDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        sendMail(subject: "監理所爬蟲：123", text: "test")
+        
         if let url = URL(string: "https://www.mvdis.gov.tw/m3-emv-trn/exm/locations#anchor") {
             // 載入監理所場次查詢網站
             crawWebView.load(URLRequest(url: url))
         }
+        
+        
         clear(cache: true, cookies: true)
     }
     
@@ -140,6 +146,7 @@ class ViewController: NSViewController, WKNavigationDelegate {
         }
         print("range is")
         print(searchDateRange)
+        
         if !searchDateRange.isEmpty
         {
             for i in searchDateRange[0]...searchDateRange[searchDateRange.count-1] // 只抓 17 號到 20 號
@@ -150,12 +157,12 @@ class ViewController: NSViewController, WKNavigationDelegate {
                     {
                         for date in doc!.xpath("//*[@id='trnTable']/tbody/tr[\(i)]/td[1]") // 日期
                         {
-                            resultDate.append(date.text!.trimmingCharacters(in: .whitespacesAndNewlines))
+                            resultDate.append(date.text!.trimmingCharacters(in: .whitespacesAndNewlines) + "武營路")
                         }
                         for date in doc!.xpath("//*[@id='trnTable']/tbody/tr[\(i)]/td[2]") // 時間
                         {
                             let time = date.text!.trimmingCharacters(in: .whitespacesAndNewlines)[26...] // 把前面不需要的訊息去除
-                            resultTime.append(time)
+                            resultTime.append(time + "\nhttps://www.mvdis.gov.tw/m3-emv-trn/exm/locations#anchor")
                         }
                         success = true // 有找到場次
                         break
@@ -169,6 +176,7 @@ class ViewController: NSViewController, WKNavigationDelegate {
             else // 有找到
             {
                 success = false
+                sendMail(subject: resultDate[0], text: resultTime[0])
                 showNotification() // 顯示場次的 notification
                 continousCraw()
             }
@@ -179,10 +187,35 @@ class ViewController: NSViewController, WKNavigationDelegate {
         }
     }
     
+    func sendMail(subject: String, text: String)
+    {
+        let smtp = SMTP(
+            hostname: "smtp.gmail.com",     // SMTP server address
+            email: "iansweb.asuscomm.com@gmail.com",        // username to login
+            password: "9zh-Ac2-3Nx-dQC"            // password to login
+        )
+        
+        let Skynet = Mail.User(name: "Skynet", email: "iansweb.asuscomm.com@gmail.com")
+        let TobyYu = Mail.User(name: "Toby Yu", email: "tobyyu007@hotmail.com")
+
+        let mail = Mail(
+            from: Skynet,
+            to: [TobyYu],
+            subject: subject,
+            text: text
+        )
+
+        smtp.send(mail) { (error) in
+            if let error = error {
+                print(error)
+            }
+        }
+    }
+    
     func showNotification() -> Void // notificaiton 設定
     {
         let notification = NSUserNotification()
-        notification.title = resultDate[0]
+        notification.title = resultDate[0] + ""
         notification.subtitle = resultTime[0]
         notification.soundName = NSUserNotificationDefaultSoundName
         notification.deliveryDate = Date(timeIntervalSinceNow: 0)

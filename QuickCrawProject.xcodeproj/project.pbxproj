@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,6 +15,7 @@
 		73E4AD3D24E3E7FB00437DB8 /* QuickCrawProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E4AD3C24E3E7FB00437DB8 /* QuickCrawProjectUITests.swift */; };
 		73F9733D24E40BA000784328 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F9733C24E40BA000784328 /* WebKit.framework */; };
 		968B9D222EA43E792F4DF1B4 /* Pods_QuickCrawProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A914B23AFC92A967B33E63E6 /* Pods_QuickCrawProject.framework */; };
+		DAA851F524EA406900E2B521 /* SwiftSMTP in Frameworks */ = {isa = PBXBuildFile; productRef = DAA851F424EA406900E2B521 /* SwiftSMTP */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 			files = (
 				73F9733D24E40BA000784328 /* WebKit.framework in Frameworks */,
 				968B9D222EA43E792F4DF1B4 /* Pods_QuickCrawProject.framework in Frameworks */,
+				DAA851F524EA406900E2B521 /* SwiftSMTP in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,6 +172,9 @@
 			dependencies = (
 			);
 			name = QuickCrawProject;
+			packageProductDependencies = (
+				DAA851F424EA406900E2B521 /* SwiftSMTP */,
+			);
 			productName = QuickCrawProject;
 			productReference = 73E4AD1B24E3E7F900437DB8 /* QuickCrawProject.app */;
 			productType = "com.apple.product-type.application";
@@ -242,6 +247,9 @@
 				Base,
 			);
 			mainGroup = 73E4AD1224E3E7F900437DB8;
+			packageReferences = (
+				DAA851F324EA406900E2B521 /* XCRemoteSwiftPackageReference "Swift-SMTP" */,
+			);
 			productRefGroup = 73E4AD1C24E3E7F900437DB8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -502,7 +510,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = Toby.QuickCrawProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -524,7 +533,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = Toby.QuickCrawProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -655,6 +665,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DAA851F324EA406900E2B521 /* XCRemoteSwiftPackageReference "Swift-SMTP" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/IBM-Swift/Swift-SMTP";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DAA851F424EA406900E2B521 /* SwiftSMTP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DAA851F324EA406900E2B521 /* XCRemoteSwiftPackageReference "Swift-SMTP" */;
+			productName = SwiftSMTP;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 73E4AD1324E3E7F900437DB8 /* Project object */;
 }

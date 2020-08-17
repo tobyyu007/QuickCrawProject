@@ -9,4 +9,5 @@ target 'QuickCrawProject' do
   
   use_frameworks!
   pod 'Kanna', '~> 5.2.2'
+  
 end
