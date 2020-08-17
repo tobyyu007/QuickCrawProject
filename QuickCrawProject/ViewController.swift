@@ -28,6 +28,28 @@ class ViewController: NSViewController, WKNavigationDelegate {
             // 載入監理所場次查詢網站
             crawWebView.load(URLRequest(url: url))
         }
+        clear(cache: true, cookies: true)
+    }
+    
+    func clear(cache: Bool, cookies: Bool) {
+        if cache { clearCache() }
+        if cookies { clearCookies() }
+    }
+
+    fileprivate func clearCache() {
+        URLCache.shared.removeAllCachedResponses()
+        URLCache.shared.diskCapacity = 0
+        URLCache.shared.memoryCapacity = 0
+    }
+
+    fileprivate func clearCookies() {
+        let cookieStorage = HTTPCookieStorage.shared
+
+        guard let cookies = cookieStorage.cookies else { return }
+
+        for cookie in cookies {
+            cookieStorage.deleteCookie(cookie)
+        }
     }
 
     @IBAction func startButton(_ sender: Any) // Start 按鈕
@@ -54,7 +76,7 @@ class ViewController: NSViewController, WKNavigationDelegate {
             }
         }
         let dateFormatter: DateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyy年M月dd日"
+        dateFormatter.dateFormat = "yyy年M月d日"
         dateFormatter.locale = Locale(identifier: "zh_Hant_TW") // 設定地區(台灣)
         dateFormatter.timeZone = TimeZone(identifier: "Asia/Taipei") // 設定時區(台灣)
         dateFormatter.calendar = Calendar(identifier: Calendar.Identifier.republicOfChina)
@@ -116,7 +138,8 @@ class ViewController: NSViewController, WKNavigationDelegate {
                 }
             }
         }
-        
+        print("range is")
+        print(searchDateRange)
         if !searchDateRange.isEmpty
         {
             for i in searchDateRange[0]...searchDateRange[searchDateRange.count-1] // 只抓 17 號到 20 號
@@ -128,12 +151,10 @@ class ViewController: NSViewController, WKNavigationDelegate {
                         for date in doc!.xpath("//*[@id='trnTable']/tbody/tr[\(i)]/td[1]") // 日期
                         {
                             resultDate.append(date.text!.trimmingCharacters(in: .whitespacesAndNewlines))
-                            resultDisplayLabel.stringValue = date.text!.trimmingCharacters(in: .whitespacesAndNewlines)
                         }
                         for date in doc!.xpath("//*[@id='trnTable']/tbody/tr[\(i)]/td[2]") // 時間
                         {
                             let time = date.text!.trimmingCharacters(in: .whitespacesAndNewlines)[26...] // 把前面不需要的訊息去除
-                            resultDisplayLabel.stringValue += time
                             resultTime.append(time)
                         }
                         success = true // 有找到場次
@@ -166,6 +187,8 @@ class ViewController: NSViewController, WKNavigationDelegate {
         notification.soundName = NSUserNotificationDefaultSoundName
         notification.deliveryDate = Date(timeIntervalSinceNow: 0)
         NSUserNotificationCenter.default.scheduleNotification(notification)
+        
+        resultDisplayLabel.stringValue = resultDate[0] + " " + resultTime[0]
     }
 }
 
