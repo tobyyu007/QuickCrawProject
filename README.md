@@ -15,6 +15,8 @@
 #### 使用的 CocoaPods 套件
 1. [Alamofire](https://github.com/Alamofire/Alamofire)
 2. [Kanna](https://github.com/tid-kijyun/Kanna)
+#### 使用的 Swift Package Manager 套件
+1. [Swift-SMTP](https://github.com/IBM-Swift/Swift-SMTP)
 
 ## 安裝 CocoaPods 方法
 1. 打開 terminal，輸入以下指令安裝
@@ -41,7 +43,7 @@ pod install
 ```
 7. 使用 xcworkspace 檔開啟專案
 
-#### 使用的 Swift Package Manager 套件
+## 設定 Swift Package Manager 方法
 1. 設定 Swift Package Manager
 - [Medium 教學](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/使用-spm-安裝第三方套件-xcode-11-新功能-2c4ffcf85b4b)
 
