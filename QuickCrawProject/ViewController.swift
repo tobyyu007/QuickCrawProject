@@ -22,6 +22,8 @@ class ViewController: NSViewController, WKNavigationDelegate {
     var dateFromFormatted = ""
     var dateToFormatted = ""
     var stopCrawing = false // 是否要爬蟲
+    var previousDateData = ""
+    var previousTimeData = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -157,7 +159,7 @@ class ViewController: NSViewController, WKNavigationDelegate {
                     {
                         for date in doc!.xpath("//*[@id='trnTable']/tbody/tr[\(i)]/td[1]") // 日期
                         {
-                            resultDate.append(date.text!.trimmingCharacters(in: .whitespacesAndNewlines) + "武營路")
+                            resultDate.append(date.text!.trimmingCharacters(in: .whitespacesAndNewlines) + "苓雅監理站")
                         }
                         for date in doc!.xpath("//*[@id='trnTable']/tbody/tr[\(i)]/td[2]") // 時間
                         {
@@ -176,7 +178,20 @@ class ViewController: NSViewController, WKNavigationDelegate {
             else // 有找到
             {
                 success = false
-                sendMail(subject: resultDate[0], text: resultTime[0])
+                if previousDateData == "" && previousTimeData == "" // 如果是第一次跑
+                {
+                    previousDateData = resultDate[0]
+                    previousTimeData = resultTime[0]
+                }
+                else
+                {
+                    if previousDateData != resultDate[0] || previousTimeData != resultTime[0] // 跟之前得資訊不一樣
+                    {
+                        sendMail(subject: resultDate[0], text: resultTime[0])
+                        previousDateData = resultDate[0]
+                        previousTimeData = resultTime[0]
+                    }
+                }
                 showNotification() // 顯示場次的 notification
                 continousCraw()
             }
