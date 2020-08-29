@@ -28,8 +28,6 @@ class ViewController: NSViewController, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        sendMail(subject: "監理所爬蟲：123", text: "test")
-        
         if let url = URL(string: "https://www.mvdis.gov.tw/m3-emv-trn/exm/locations#anchor") {
             // 載入監理所場次查詢網站
             crawWebView.load(URLRequest(url: url))
@@ -63,6 +61,8 @@ class ViewController: NSViewController, WKNavigationDelegate {
     @IBAction func startButton(_ sender: Any) // Start 按鈕
     {
         stopCrawing = false
+        previousTimeData = "" // 上次搜尋到的時間
+        previousDateData = "" // 上次搜尋到的日期
         let javascriptString = "document.querySelector('.cont90 .gap_t2 .std_btn').click();" // 按 "查詢場次" 按鈕
         crawWebView.evaluateJavaScript(javascriptString){ (value, error) in
             if let err = error {
@@ -151,7 +151,7 @@ class ViewController: NSViewController, WKNavigationDelegate {
         
         if !searchDateRange.isEmpty
         {
-            for i in searchDateRange[0]...searchDateRange[searchDateRange.count-1] // 只抓 17 號到 20 號
+            for i in searchDateRange[0]...searchDateRange[searchDateRange.count-1]
             {
                 for number in doc!.xpath("//*[@id='trnTable']/tbody/tr[\(i)]/td[3]")
                 {
@@ -159,7 +159,7 @@ class ViewController: NSViewController, WKNavigationDelegate {
                     {
                         for date in doc!.xpath("//*[@id='trnTable']/tbody/tr[\(i)]/td[1]") // 日期
                         {
-                            resultDate.append(date.text!.trimmingCharacters(in: .whitespacesAndNewlines) + "苓雅監理站")
+                            resultDate.append(date.text!.trimmingCharacters(in: .whitespacesAndNewlines) + "苓雅監理所")
                         }
                         for date in doc!.xpath("//*[@id='trnTable']/tbody/tr[\(i)]/td[2]") // 時間
                         {
@@ -182,6 +182,7 @@ class ViewController: NSViewController, WKNavigationDelegate {
                 {
                     previousDateData = resultDate[0]
                     previousTimeData = resultTime[0]
+                    sendMail(subject: resultDate[0], text: resultTime[0])
                 }
                 else
                 {
